@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html Lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Movies </title>
+    <link rel="stylesheet" href= "https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
+ </head>
+<body>
+<div class="container">
+    <h1 Class="text-center mt-5">Movie Info</h1>
+    <form id="movieform" autocomplete="off">
+        <div class="form-group">
+            <label for="Movie">Movie Name</label> 
+           <input class="form-control" type="text" id="movie" placeholder="Movie...">
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-danger btn-block">
+                Search Movie
+            </button>
+        </div>
+    </form>
+    <div id="result"></div>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script> 
+    $(document).ready(function(){
+        var apikey= "APIKEY" //GENERATE YOUR API KEY
+        console.log('api key==>'+apikey)
+
+        $("#movieform").submit(function(event){
+            event.preventDefault()
+        var movie = $("#movie").val()
+        var result = " "
+
+        // var movie="no entry"
+        console.log('movie==>'+movie)
+
+        var url= "http://www.omdbapi.com/?apikey="+apikey
+        $.ajax({
+            method:'GET',
+            url:url+"&t="+movie,
+            success:function(data){
+                console.log(data)
+                
+              result= `
+              <img style="float:left" class="img-thumnail" width="200" height="300" src="${data.Poster}"/>
+              <h2>${data.Title} </h2>
+              <h2>${data.Released} </h2>
+              <h2>${data.Runtime} </h2>
+              <h2>${data.Genre} </h2>
+              <h2>${data.Director} </h2>
+
+              `
+            $("#result").html(result)
+
+
+            }
+        })
+    })
+})
+
+</script>
+</html>
